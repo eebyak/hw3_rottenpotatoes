@@ -14,7 +14,10 @@ end
 Then /I should see "(.*)" before "(.*)"/ do |e1, e2|
   #  ensure that that e1 occurs before e2.
   #  page.body is the entire content of the page as a string.
-  flunk "Unimplemented"
+  s = StringScanner.new(page.body)
+  location1 = s.exist? /#{e1}/
+  location2 = s.exist? /#{e2}/
+  location1.should < location2
 end
 
 
@@ -70,7 +73,7 @@ When /I (un)?check the following ratings: (.*)/ do |uncheck, rating_list|
   rl.each do |rating|
     r = "ratings_"
     r << rating
-    if uncheck then s = "uncheck" else s = "check" end
+    if uncheck then      s = "uncheck"    else      s = "check"    end
     step %Q{I #{s} "#{r}"}
 #    step  %Q{I check "ratings_PG"}
 
