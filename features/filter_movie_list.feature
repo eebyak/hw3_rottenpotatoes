@@ -22,6 +22,11 @@ Background: movies have been added to database
   And  I am on the RottenPotatoes home page
   
 Scenario: restrict to movies with 'PG' or 'R' ratings
+
+  When I check the following ratings: PG, R
+  When I press "ratings_submit"
+  Then I should see the following ratings: PG, R
+
   # enter step(s) to check the 'PG' and 'R' checkboxes
   # enter step(s) to uncheck all other checkboxes
   # enter step to "submit" the search form on the homepage
@@ -31,5 +36,13 @@ Scenario: restrict to movies with 'PG' or 'R' ratings
 Scenario: no ratings selected
   # see assignment
 
+  When I uncheck all the ratings
+  When I press "ratings_submit"
+  Then I should see some movies
+
 Scenario: all ratings selected
   # see assignment
+
+  When I check all the ratings
+  When I press "ratings_submit"
+  Then I should see all of the movies
